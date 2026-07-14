@@ -1,0 +1,63 @@
+
+Table users {
+  id uuid [pk]
+  name varchar
+  email varchar [unique]
+  password_hash varchar
+  role varchar
+  active boolean
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table products {
+  id uuid [pk]
+  name varchar
+  description text
+  category varchar
+  type varchar
+  minimum_stock numeric
+  active boolean
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table operations {
+  id uuid [pk]
+  type varchar
+  status varchar
+  operation_date timestamp
+  description text
+  notes text
+  financial_amount numeric
+  created_by uuid
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table operation_items {
+  id uuid [pk]
+  operation_id uuid
+  product_id uuid
+  product_description_snapshot varchar
+  quantity numeric
+  unit_price numeric
+}
+
+Table attachments {
+  id uuid [pk]
+  operation_id uuid
+  original_file_name varchar
+  storage_file_name varchar
+  content_type varchar
+  file_size bigint
+  storage_path varchar
+  uploaded_by uuid
+  uploaded_at timestamp
+}
+
+Ref: operations.created_by > users.id
+Ref: operation_items.operation_id > operations.id
+Ref: operation_items.product_id > products.id
+Ref: attachments.operation_id > operations.id
+Ref: attachments.uploaded_by > users.id

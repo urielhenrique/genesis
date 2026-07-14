@@ -1,0 +1,13 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="Página-1" id="UuJQYEsSKyKMoFYezAgE">
+    <mxGraphModel dx="1414" dy="2998" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="qlj9HecOtbO_iCbvZldz-14" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;span style=&quot;text-align: left;&quot;&gt;Operation&lt;/span&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&amp;nbsp;id : UUID&amp;nbsp;&lt;br&gt;&amp;nbsp;category&amp;nbsp;&lt;br&gt;&amp;nbsp;direction&amp;nbsp;&lt;br&gt;&amp;nbsp;medium&amp;nbsp;&lt;br&gt;&amp;nbsp;status&amp;nbsp;&lt;br&gt;&amp;nbsp;description&amp;nbsp;&lt;br&gt;&amp;nbsp; notes&amp;nbsp;&lt;br&gt;&amp;nbsp;operationDate&amp;nbsp;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&amp;nbsp;confirm()&amp;nbsp;&lt;br&gt;&amp;nbsp;cancel()&amp;nbsp;&lt;br&gt;&amp;nbsp;addItem()&amp;nbsp;&lt;br&gt;&amp;nbsp;removeItem()&amp;nbsp;&lt;br&gt;&amp;nbsp;addAttachment()&amp;nbsp;&lt;/p&gt;" vertex="1">
+          <mxGeometry height="240" width="160" x="30" y="-1100" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

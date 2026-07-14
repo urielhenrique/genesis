@@ -1,0 +1,36 @@
+# IntelliJ
+.idea/
+*.iml
+
+# Java
+target/
+out/
+
+# Maven
+.mvn/wrapper/maven-wrapper.jar
+
+# Logs
+*.log
+
+# Windows
+Thumbs.db
+Desktop.ini
+
+# macOS
+.DS_Store
+
+# Flutter
+frontend/.dart_tool/
+frontend/build/
+frontend/.packages
+frontend/.flutter-plugins
+frontend/.flutter-plugins-dependencies
+
+# Environment
+.env
+
+# VSCode
+.vscode/
+
+# Generated
+coverage/
