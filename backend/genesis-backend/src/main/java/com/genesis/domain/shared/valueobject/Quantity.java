@@ -5,6 +5,8 @@ import java.util.Objects;
 
 public final class Quantity {
 
+    public static final Quantity ZERO = new Quantity(BigDecimal.ZERO);
+
     private final BigDecimal value;
 
     public Quantity(BigDecimal value) {
@@ -13,8 +15,8 @@ public final class Quantity {
             throw new IllegalArgumentException("Quantity cannot be null.");
         }
 
-        if (value.compareTo(BigDecimal.ZERO) <= 0) {
-            throw new IllegalArgumentException("Quantity must be greater than zero.");
+        if (value.compareTo(BigDecimal.ZERO) < 0) {
+            throw new IllegalArgumentException("Quantity cannot be negative.");
         }
 
         this.value = value;
@@ -39,7 +41,17 @@ public final class Quantity {
             throw new IllegalArgumentException("Quantity cannot be null.");
         }
 
-        return new Quantity(this.value.subtract(other.value));
+        BigDecimal result = this.value.subtract(other.value);
+
+        if (result.compareTo(BigDecimal.ZERO) < 0) {
+            throw new IllegalArgumentException("Insufficient quantity in stock.");
+        }
+
+        return new Quantity(result);
+    }
+
+    public boolean isZero() {
+        return value.compareTo(BigDecimal.ZERO) == 0;
     }
 
     @Override
