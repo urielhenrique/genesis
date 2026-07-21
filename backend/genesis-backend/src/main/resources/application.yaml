@@ -1,3 +1,34 @@
 spring:
   application:
     name: genesis-backend
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/genesis
+    username: postgres
+    password: LSsnMG74ZXYMmj
+
+  jpa:
+    open-in-view: false
+
+    hibernate:
+      ddl-auto: validate
+
+    properties:
+      hibernate:
+        default_schema: genesis
+        format_sql: true
+
+  flyway:
+    enabled: true
+    default-schema: genesis
+    schemas: genesis
+    locations: classpath:db/migration
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+
+server:
+  port: 8080
