@@ -34,6 +34,38 @@ public class Product extends BaseEntity {
         this.unitPrice = unitPrice;
         this.type = type;
         this.active = true;
+
+    }
+
+    public Product(
+        java.util.UUID id,
+        java.time.LocalDateTime createdAt,
+        java.time.LocalDateTime updatedAt,
+        String name,
+        String description,
+        Money unitPrice,
+        ProductType type,
+        boolean active) {
+
+        super(id, createdAt, updatedAt);
+
+        if (name == null || name.isBlank()) {
+            throw new IllegalArgumentException("Product name is required.");
+        }
+
+        if (unitPrice == null) {
+            throw new IllegalArgumentException("Unit price is required.");
+        }
+
+        if (type == null) {
+            throw new IllegalArgumentException("Product type is required.");
+        }
+
+        this.name = name.trim();
+        this.description = description;
+        this.unitPrice = unitPrice;
+        this.type = type;
+        this.active = active;
     }
 
     public String getName() {
@@ -90,4 +122,6 @@ public class Product extends BaseEntity {
         this.active = false;
         touch();
     }
+
+
 }
