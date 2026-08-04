@@ -8,6 +8,8 @@ import com.genesis.application.product.usecase.FindProductByIdUseCase;
 import com.genesis.application.product.usecase.ListProductsUseCase;
 import com.genesis.application.product.usecase.UpdateProductUseCase;
 import com.genesis.application.product.dto.UpdateProductRequest;
+import com.genesis.application.product.usecase.ActivateProductUseCase;
+import com.genesis.application.product.usecase.DesactivateProductUseCase;
 
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -25,18 +27,24 @@ public class ProductController {
     private final ProductResponseMapper responseMapper;
     private final FindProductByIdUseCase findProductByIdUseCase;
     private final UpdateProductUseCase updateProductUseCase;
+    private final ActivateProductUseCase activateProductUseCase;
+    private final DesactivateProductUseCase desactivateProductUseCase;
 
     public ProductController(
         CreateProductUseCase createProductUseCase,
         ListProductsUseCase listProductsUseCase,
         FindProductByIdUseCase findProductByIdUseCase,
         UpdateProductUseCase updateProductUseCase,
+        ActivateProductUseCase activateProductUseCase,
+        DesactivateProductUseCase desactivateProductUseCase,
         ProductResponseMapper responseMapper) {
 
         this.createProductUseCase = createProductUseCase;
         this.listProductsUseCase = listProductsUseCase;
         this.findProductByIdUseCase = findProductByIdUseCase;
         this.updateProductUseCase = updateProductUseCase;
+        this.activateProductUseCase = activateProductUseCase;
+        this.desactivateProductUseCase = desactivateProductUseCase;
         this.responseMapper = responseMapper;
     }
 
@@ -75,6 +83,22 @@ public class ProductController {
 
         return responseMapper.toResponse(
             updateProductUseCase.execute(id, request)
+        );
+    }
+
+    @PatchMapping("/{id}/activate")
+    public ProductResponse activate(@PathVariable UUID id) {
+
+        return responseMapper.toResponse(
+            activateProductUseCase.execute(id)
+        );
+    }
+
+    @PatchMapping("/{id}/desactivate")
+    public ProductResponse desactivate(@PathVariable UUID id) {
+
+        return responseMapper.toResponse(
+            desactivateProductUseCase.execute(id)
         );
     }
 
