@@ -6,6 +6,9 @@ import com.genesis.application.product.response.ProductResponse;
 import com.genesis.application.product.usecase.CreateProductUseCase;
 import com.genesis.application.product.usecase.FindProductByIdUseCase;
 import com.genesis.application.product.usecase.ListProductsUseCase;
+import com.genesis.application.product.usecase.UpdateProductUseCase;
+import com.genesis.application.product.dto.UpdateProductRequest;
+
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -21,16 +24,19 @@ public class ProductController {
     private final ListProductsUseCase listProductsUseCase;
     private final ProductResponseMapper responseMapper;
     private final FindProductByIdUseCase findProductByIdUseCase;
+    private final UpdateProductUseCase updateProductUseCase;
 
     public ProductController(
         CreateProductUseCase createProductUseCase,
         ListProductsUseCase listProductsUseCase,
         FindProductByIdUseCase findProductByIdUseCase,
+        UpdateProductUseCase updateProductUseCase,
         ProductResponseMapper responseMapper) {
 
         this.createProductUseCase = createProductUseCase;
         this.listProductsUseCase = listProductsUseCase;
         this.findProductByIdUseCase = findProductByIdUseCase;
+        this.updateProductUseCase = updateProductUseCase;
         this.responseMapper = responseMapper;
     }
 
@@ -60,6 +66,16 @@ public class ProductController {
             findProductByIdUseCase.execute(id)
         );
 
+    }
+
+    @PutMapping("/{id}")
+    public ProductResponse update(
+        @PathVariable UUID id,
+        @Valid @RequestBody UpdateProductRequest request) {
+
+        return responseMapper.toResponse(
+            updateProductUseCase.execute(id, request)
+        );
     }
 
 }

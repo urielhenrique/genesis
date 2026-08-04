@@ -123,5 +123,15 @@ public class Product extends BaseEntity {
         touch();
     }
 
+    public void changeType(ProductType newType) {
+
+        if (newType == null) {
+            throw new IllegalArgumentException("Product type is required.");
+        }
+
+        this.type = newType;
+
+        touch();
+    }
 
 }
