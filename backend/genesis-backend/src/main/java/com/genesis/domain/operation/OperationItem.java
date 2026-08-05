@@ -42,10 +42,6 @@ public class OperationItem extends BaseEntity {
         return quantity;
     }
 
-    public Money getUnitPrice() {
-        return unitPrice;
-    }
-
     public Money getTotalPrice() {
         return unitPrice.multiply(quantity.getValue());
     }

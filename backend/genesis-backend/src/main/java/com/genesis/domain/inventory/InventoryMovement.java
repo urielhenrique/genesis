@@ -1,6 +1,7 @@
 package com.genesis.domain.inventory;
 
 import com.genesis.domain.shared.entity.BaseEntity;
+import com.genesis.domain.shared.valueobject.Money;
 import com.genesis.domain.shared.valueobject.Quantity;
 
 import java.time.LocalDateTime;
@@ -78,4 +79,6 @@ public class InventoryMovement extends BaseEntity {
     public LocalDateTime getMovementDate() {
         return movementDate;
     }
+
+
 }

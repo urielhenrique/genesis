@@ -5,12 +5,15 @@ import com.genesis.domain.product.Product;
 import com.genesis.domain.shared.entity.BaseEntity;
 import com.genesis.domain.shared.valueobject.Quantity;
 
+
 public class Inventory extends BaseEntity {
 
     private Product product;
     private Quantity quantity;
 
-    public Inventory(Product product, Quantity quantity) {
+    public Inventory(
+        Product product,
+        Quantity quantity) {
 
         if (product == null) {
             throw new IllegalArgumentException("Product is required.");
@@ -65,4 +68,26 @@ public class Inventory extends BaseEntity {
 
         touch();
     }
+
+    public Inventory(
+        java.util.UUID id,
+        java.time.LocalDateTime createdAt,
+        java.time.LocalDateTime updatedAt,
+        Product product,
+        Quantity quantity) {
+
+        super(id, createdAt, updatedAt);
+
+        if (product == null) {
+            throw new IllegalArgumentException("Product is required.");
+        }
+
+        if (quantity == null) {
+            throw new IllegalArgumentException("Quantity is required.");
+        }
+
+        this.product = product;
+        this.quantity = quantity;
+    }
+
 }
