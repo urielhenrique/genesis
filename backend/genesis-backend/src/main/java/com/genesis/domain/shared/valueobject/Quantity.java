@@ -41,17 +41,42 @@ public final class Quantity {
             throw new IllegalArgumentException("Quantity cannot be null.");
         }
 
-        BigDecimal result = this.value.subtract(other.value);
-
-        if (result.compareTo(BigDecimal.ZERO) < 0) {
-            throw new IllegalArgumentException("Insufficient quantity in stock.");
-        }
-
-        return new Quantity(result);
+        return new Quantity(this.value.subtract(other.value));
     }
 
     public boolean isZero() {
         return value.compareTo(BigDecimal.ZERO) == 0;
+    }
+
+    public boolean isPositive() {
+        return value.compareTo(BigDecimal.ZERO) > 0;
+    }
+
+    public boolean isGreaterThan(Quantity other) {
+
+        if (other == null) {
+            throw new IllegalArgumentException("Quantity cannot be null.");
+        }
+
+        return value.compareTo(other.value) > 0;
+    }
+
+    public boolean isGreaterThanOrEqual(Quantity other) {
+
+        if (other == null) {
+            throw new IllegalArgumentException("Quantity cannot be null.");
+        }
+
+        return value.compareTo(other.value) >= 0;
+    }
+
+    public boolean isLessThan(Quantity other) {
+
+        if (other == null) {
+            throw new IllegalArgumentException("Quantity cannot be null.");
+        }
+
+        return value.compareTo(other.value) < 0;
     }
 
     @Override

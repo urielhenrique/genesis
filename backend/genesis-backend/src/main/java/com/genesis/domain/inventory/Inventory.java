@@ -1,5 +1,6 @@
 package com.genesis.domain.inventory;
 
+import com.genesis.domain.exception.InsufficientInventoryException;
 import com.genesis.domain.product.Product;
 import com.genesis.domain.shared.entity.BaseEntity;
 import com.genesis.domain.shared.valueobject.Quantity;
@@ -37,7 +38,12 @@ public class Inventory extends BaseEntity {
             throw new IllegalArgumentException("Quantity is required.");
         }
 
+        if (!quantity.isPositive()) {
+            throw new IllegalArgumentException("Quantity must be greater than zero.");
+        }
+
         this.quantity = this.quantity.add(quantity);
+
         touch();
     }
 
@@ -47,7 +53,16 @@ public class Inventory extends BaseEntity {
             throw new IllegalArgumentException("Quantity is required.");
         }
 
+        if (this.quantity.getValue().compareTo(quantity.getValue()) < 0) {
+            throw new InsufficientInventoryException(
+                product.getName(),
+                this.quantity.getValue().intValue(),
+                quantity.getValue().intValue()
+            );
+        }
+
         this.quantity = this.quantity.subtract(quantity);
+
         touch();
     }
 }
