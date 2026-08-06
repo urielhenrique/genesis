@@ -1,5 +1,6 @@
 package com.genesis.infrastructure.persistence.adapter;
 
+import com.genesis.domain.exception.ProductNotFoundException;
 import com.genesis.domain.inventory.Inventory;
 import com.genesis.domain.product.Product;
 import com.genesis.domain.repository.InventoryRepository;
@@ -9,6 +10,7 @@ import com.genesis.infrastructure.persistence.mapper.InventoryPersistenceMapper;
 import com.genesis.infrastructure.persistence.repository.InventoryJpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -50,6 +52,23 @@ public class InventoryPersistenceAdapter implements InventoryRepository {
                 productRepository.findById(entity.getProductId())
                     .map(product -> mapper.toDomain(entity, product))
             );
+    }
+
+    @Override
+    public List<Inventory> findAll() {
+
+        return jpaRepository.findAll()
+            .stream()
+            .map(entity -> {
+
+                Product product = productRepository
+                    .findById(entity.getProductId())
+                    .orElseThrow(() ->
+                        new ProductNotFoundException(entity.getProductId()));
+
+                return mapper.toDomain(entity, product);
+            })
+            .toList();
     }
 
 }
