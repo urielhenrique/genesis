@@ -16,17 +16,14 @@ public class InventoryMovement extends BaseEntity {
 
     private final Quantity quantity;
 
-    private final String observation;
-
-    private final LocalDateTime movementDate;
+    private final String notes;
 
     public InventoryMovement(
             Inventory inventory,
             InventoryMovementType type,
             InventoryMovementReason reason,
             Quantity quantity,
-            String observation,
-            LocalDateTime movementDate) {
+            String notes) {
 
         if (inventory == null) {
             throw new IllegalArgumentException("Inventory is required.");
@@ -44,16 +41,11 @@ public class InventoryMovement extends BaseEntity {
             throw new IllegalArgumentException("Quantity is required.");
         }
 
-        if (movementDate == null) {
-            throw new IllegalArgumentException("Movement date is required.");
-        }
-
         this.inventory = inventory;
         this.type = type;
         this.reason = reason;
         this.quantity = quantity;
-        this.observation = observation;
-        this.movementDate = movementDate;
+        this.notes = notes;
     }
 
     public Inventory getInventory() {
@@ -72,12 +64,8 @@ public class InventoryMovement extends BaseEntity {
         return quantity;
     }
 
-    public String getObservation() {
-        return observation;
-    }
-
-    public LocalDateTime getMovementDate() {
-        return movementDate;
+    public String getNotes() {
+        return notes;
     }
 
 
