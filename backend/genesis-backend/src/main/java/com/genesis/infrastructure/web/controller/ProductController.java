@@ -258,6 +258,7 @@ public class ProductController {
      * Ativar um produto.
      */
     @PatchMapping("/{id}/activate")
+    @ResponseStatus(HttpStatus.OK)
     public ProductResponse activate(@PathVariable UUID id) {
 
         return responseMapper.toResponse(
@@ -279,6 +280,7 @@ public class ProductController {
      * Desativar um produto.
      */
     @PatchMapping("/{id}/desactivate")
+    @ResponseStatus(HttpStatus.OK)
     public ProductResponse desactivate(@PathVariable UUID id) {
 
         return responseMapper.toResponse(
