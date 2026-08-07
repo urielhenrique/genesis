@@ -1,15 +1,147 @@
+/**
+ * ============================================================================
+ * CLASSE: Product
+ * ============================================================================
+ *
+ * CAMADA:
+ * Domain -> Product
+ *
+ * RESPONSABILIDADE:
+ *
+ * Representa um produto do sistema Genesis.
+ *
+ * Um produto é uma ENTIDADE do domínio.
+ *
+ * Exemplos:
+ *
+ * • Café
+ * • Açúcar
+ * • Água Mineral
+ * • Refrigerante
+ * • Camiseta
+ *
+ * ============================================================================
+ *
+ * O QUE É UMA ENTITY?
+ *
+ * Uma Entity representa algo que possui identidade.
+ *
+ * Exemplo:
+ *
+ * Produto A
+ *
+ * UUID:
+ *
+ * a12f...
+ *
+ * Mesmo que o nome mude,
+ * continua sendo o mesmo produto.
+ *
+ * Diferente de um Value Object,
+ * uma Entity possui identidade própria.
+ *
+ * ============================================================================
+ *
+ * ESTA CLASSE É RESPONSÁVEL POR:
+ *
+ * ✔ armazenar os dados do produto
+ *
+ * ✔ validar regras
+ *
+ * ✔ alterar seu próprio estado
+ *
+ * ✔ proteger seus atributos
+ *
+ * ============================================================================
+ */
+
 package com.genesis.domain.product;
 
+/*
+ * ============================================================================
+ * IMPORTS
+ * ============================================================================
+ */
+
+/*
+ * BaseEntity fornece:
+ *
+ * • UUID
+ * • createdAt
+ * • updatedAt
+ * • touch()
+ *
+ * Todas as entidades do Genesis herdam dela.
+ */
 import com.genesis.domain.shared.entity.BaseEntity;
+
+/*
+ * Money representa um valor monetário.
+ *
+ * Em vez de utilizar BigDecimal diretamente,
+ * utilizamos um Value Object.
+ */
 import com.genesis.domain.shared.valueobject.Money;
 
 public class Product extends BaseEntity {
 
+    /*
+     * ========================================================================
+     * ATRIBUTOS
+     * ========================================================================
+     */
+
+    /*
+     * Nome do produto.
+     *
+     * Exemplo:
+     *
+     * Café Tradicional
+     */
     private String name;
+
+    /*
+     * Descrição detalhada.
+     */
     private String description;
+
+    /*
+     * Valor unitário.
+     *
+     * Utilizamos Money para garantir
+     * todas as regras financeiras.
+     */
     private Money unitPrice;
+
+    /*
+     * Tipo do produto.
+     *
+     * Exemplo:
+     *
+     * FOOD
+     * DRINK
+     * SERVICE
+     */
     private ProductType type;
+
+    /*
+     * Indica se o produto pode ser utilizado.
+     */
     private boolean active;
+
+    /*
+     * ========================================================================
+     * CONSTRUTOR
+     * ========================================================================
+     *
+     * Utilizado para criar um NOVO produto.
+     *
+     * Neste momento o BaseEntity cria:
+     *
+     * • UUID
+     * • createdAt
+     * • updatedAt
+     */
 
     public Product(
         String name,
@@ -17,13 +149,27 @@ public class Product extends BaseEntity {
         Money unitPrice,
         ProductType type) {
 
+        /*
+         * Validação da regra:
+         *
+         * Todo produto deve possuir nome.
+         */
+
         if (name == null || name.isBlank()) {
             throw new IllegalArgumentException("Product name is required.");
         }
 
+        /*
+         * Todo produto precisa possuir um preço.
+         */
+
         if (unitPrice == null) {
             throw new IllegalArgumentException("Unit price is required.");
         }
+
+        /*
+         * Todo produto deve possuir um tipo.
+         */
 
         if (type == null) {
             throw new IllegalArgumentException("Product type is required.");
@@ -68,6 +214,16 @@ public class Product extends BaseEntity {
         this.active = active;
     }
 
+    /*
+     * ========================================================================
+     * GETTERS
+     * ========================================================================
+     *
+     * Apenas devolvem informações.
+     *
+     * Nunca alteram o estado do produto.
+     */
+
     public String getName() {
         return name;
     }
@@ -88,6 +244,22 @@ public class Product extends BaseEntity {
         return active;
     }
 
+    /*
+     * ========================================================================
+     * MÉTODO rename()
+     * ========================================================================
+     *
+     * Responsabilidade:
+     *
+     * Alterar o nome do produto.
+     *
+     * Fluxo:
+     *
+     * 1. Valida o novo nome.
+     * 2. Atualiza o atributo.
+     * 3. Atualiza updatedAt.
+     */
+
     public void rename(String newName) {
 
         if (newName == null || newName.isBlank()) {
@@ -103,6 +275,19 @@ public class Product extends BaseEntity {
         touch();
     }
 
+    /*
+     * ============================================================================
+     * MÉTODO changePrice()
+     * ============================================================================
+     *
+     * Responsabilidade:
+     *
+     * Alterar o preço do produto.
+     *
+     * Observe que utilizamos Money,
+     * nunca BigDecimal diretamente.
+     */
+
     public void changePrice(Money newPrice) {
 
         if (newPrice == null) {
@@ -113,10 +298,27 @@ public class Product extends BaseEntity {
         touch();
     }
 
+    /*
+     * Ativa o produto.
+     *
+     * Produtos ativos podem ser utilizados
+     * pelo restante do sistema.
+     */
+
     public void activate() {
         this.active = true;
         touch();
     }
+
+    /*
+     * Desativa o produto.
+     *
+     * O produto continua existindo,
+     * porém deixa de ser utilizado.
+     *
+     * Isto é chamado de Soft Delete
+     * ou Inativação Lógica.
+     */
 
     public void deactivate() {
         this.active = false;
@@ -133,5 +335,33 @@ public class Product extends BaseEntity {
 
         touch();
     }
+
+    /*
+     * ============================================================================
+     * RESUMO DA AULA
+     * ============================================================================
+     *
+     * Nesta classe aprendemos:
+     *
+     * ✔ Entity
+     *
+     * ✔ Herança
+     *
+     * ✔ Encapsulamento
+     *
+     * ✔ Métodos de negócio
+     *
+     * ✔ Validação
+     *
+     * ✔ Value Object
+     *
+     * ✔ Enum
+     *
+     * ✔ touch()
+     *
+     * ✔ Soft Delete
+     *
+     * ============================================================================
+     */
 
 }

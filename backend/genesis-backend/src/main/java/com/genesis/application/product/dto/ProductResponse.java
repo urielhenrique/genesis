@@ -1,4 +1,4 @@
-package com.genesis.application.product.response;
+package com.genesis.application.product.dto;
 
 import com.genesis.domain.product.ProductType;
 

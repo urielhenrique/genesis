@@ -1,6 +1,6 @@
 package com.genesis.application.product.mapper;
 
-import com.genesis.application.product.response.ProductResponse;
+import com.genesis.application.product.dto.ProductResponse;
 import com.genesis.domain.product.Product;
 import org.springframework.stereotype.Component;
 
