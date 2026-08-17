@@ -39,6 +39,7 @@ import com.genesis.domain.exception.FinancialCategoryNotFoundException;
 import com.genesis.domain.exception.FinancialTransactionNotFoundException;
 
 import com.genesis.domain.exception.EventNotFoundException;
+import com.genesis.domain.exception.ReceiptFileNotFoundException;
 
 /*
  * Status HTTP.
@@ -203,6 +204,34 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(EventNotFoundException.class)
     public ResponseEntity<String> handleEventNotFound(
         EventNotFoundException exception) {
+
+        return ResponseEntity
+            .status(HttpStatus.NOT_FOUND)
+            .body(exception.getMessage());
+    }
+
+    /*
+     * ============================================================================
+     * MÉTODO: handleIllegalArgument()
+     * ============================================================================
+     *
+     * Responsabilidade:
+     *
+     * Converter erros de entrada/regra de validação para
+     * HTTP 400 Bad Request.
+     */
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<String> handleIllegalArgument(
+        IllegalArgumentException exception) {
+
+        return ResponseEntity
+            .status(HttpStatus.BAD_REQUEST)
+            .body(exception.getMessage());
+    }
+
+    @ExceptionHandler(ReceiptFileNotFoundException.class)
+    public ResponseEntity<String> handleReceiptFileNotFound(
+        ReceiptFileNotFoundException exception) {
 
         return ResponseEntity
             .status(HttpStatus.NOT_FOUND)
