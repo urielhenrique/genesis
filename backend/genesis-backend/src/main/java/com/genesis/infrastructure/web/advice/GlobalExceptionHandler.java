@@ -38,6 +38,8 @@ import com.genesis.domain.exception.FinancialCategoryNotFoundException;
  */
 import com.genesis.domain.exception.FinancialTransactionNotFoundException;
 
+import com.genesis.domain.exception.EventNotFoundException;
+
 /*
  * Status HTTP.
  */
@@ -182,6 +184,25 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(FinancialTransactionNotFoundException.class)
     public ResponseEntity<String> handleFinancialTransactionNotFound(
         FinancialTransactionNotFoundException exception) {
+
+        return ResponseEntity
+            .status(HttpStatus.NOT_FOUND)
+            .body(exception.getMessage());
+    }
+
+    /*
+     * ============================================================================
+     * MÉTODO: handleEventNotFound()
+     * ============================================================================
+     *
+     * Responsabilidade:
+     *
+     * Converter EventNotFoundException
+     * para HTTP 404 Not Found.
+     */
+    @ExceptionHandler(EventNotFoundException.class)
+    public ResponseEntity<String> handleEventNotFound(
+        EventNotFoundException exception) {
 
         return ResponseEntity
             .status(HttpStatus.NOT_FOUND)
