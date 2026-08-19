@@ -88,7 +88,10 @@ public class DeleteEventUseCase {
         /*
          * Localiza o evento.
          *
-         * Se não existir, lança a exceção.
+         * Como o EventRepository.findById()
+         * utiliza apenas eventos ativos,
+         * um evento já desativado será tratado
+         * como inexistente.
          */
         Event event =
             eventRepository
@@ -98,9 +101,17 @@ public class DeleteEventUseCase {
                 );
 
         /*
-         * Remove o evento através do Repository.
+         * Exclusão lógica.
+         *
+         * O registro permanece no banco,
+         * mas active passa para false.
          */
-        eventRepository.delete(event);
+        event.deactivate();
+
+        /*
+         * Persiste a alteração.
+         */
+        eventRepository.save(event);
     }
 
     /*

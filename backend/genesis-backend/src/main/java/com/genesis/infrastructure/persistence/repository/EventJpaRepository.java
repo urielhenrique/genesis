@@ -34,6 +34,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * Identificador UUID.
  */
 import java.util.UUID;
+import java.util.List;
+import java.util.Optional;
 
 /**
  * Repository JPA responsável pela persistência de eventos.
@@ -41,4 +43,15 @@ import java.util.UUID;
 public interface EventJpaRepository
     extends JpaRepository<EventJpaEntity, UUID> {
 
+    /*
+     * Busca somente eventos ativos pelo ID.
+     */
+    Optional<EventJpaEntity> findByIdAndActiveTrue(
+        UUID id
+    );
+
+    /*
+     * Lista somente eventos ativos.
+     */
+    List<EventJpaEntity> findAllByActiveTrue();
 }

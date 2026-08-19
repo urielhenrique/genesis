@@ -143,7 +143,7 @@ public class EventPersistenceAdapter
     public Optional<Event> findById(UUID id) {
 
         return jpaRepository
-            .findById(id)
+            .findByIdAndActiveTrue(id)
             .map(mapper::toDomain);
     }
 
@@ -158,7 +158,7 @@ public class EventPersistenceAdapter
     public List<Event> findAll() {
 
         return jpaRepository
-            .findAll()
+            .findAllByActiveTrue()
             .stream()
             .map(mapper::toDomain)
             .toList();
