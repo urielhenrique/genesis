@@ -71,7 +71,9 @@ public class FinancialTransactionPersistenceMapper {
             transaction.getTransactionDate(),
             transaction.getNotes(),
             transaction.getCreatedAt(),
-            transaction.getUpdatedAt()
+            transaction.getUpdatedAt(),
+            transaction.isActive()
+
         );
     }
 
@@ -102,7 +104,8 @@ public class FinancialTransactionPersistenceMapper {
             category,
             entity.getPaymentMethod(),
             entity.getTransactionDate(),
-            entity.getNotes()
+            entity.getNotes(),
+            entity.isActive()
         );
     }
 

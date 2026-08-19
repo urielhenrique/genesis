@@ -101,6 +101,14 @@ public class FinancialTransaction extends BaseEntity {
     private String notes;
 
     /*
+     * Indica se a movimentação está ativa.
+     *
+     * TRUE  = movimentação ativa
+     * FALSE = excluída logicamente
+     */
+    private boolean active = true;
+
+    /*
      * ============================================================================
      * CONSTRUTOR
      * ============================================================================
@@ -203,7 +211,8 @@ public class FinancialTransaction extends BaseEntity {
         FinancialCategory category,
         PaymentMethod paymentMethod,
         LocalDateTime transactionDate,
-        String notes) {
+        String notes,
+        boolean active) {
 
         super(id, createdAt, updatedAt);
 
@@ -284,6 +293,10 @@ public class FinancialTransaction extends BaseEntity {
 
     public String getNotes() {
         return notes;
+    }
+
+    public boolean isActive() {
+        return active;
     }
 
     /*
@@ -427,6 +440,21 @@ public class FinancialTransaction extends BaseEntity {
         /*
          * Atualiza a data de alteração.
          */
+        touch();
+
+    }
+
+    /*
+     * ============================================================================
+     * MÉTODO: deactivate()
+     * ============================================================================
+     *
+     * Realiza a exclusão lógica da movimentação.
+     */
+    public void deactivate() {
+
+        this.active = false;
+
         touch();
     }
 }

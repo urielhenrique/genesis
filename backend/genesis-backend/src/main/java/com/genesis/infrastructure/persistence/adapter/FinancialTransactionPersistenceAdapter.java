@@ -197,7 +197,7 @@ public class FinancialTransactionPersistenceAdapter
         UUID id) {
 
         return jpaRepository
-            .findById(id)
+            .findByIdAndActiveTrue(id)
             .map(entity ->
                 categoryRepository
                     .findById(entity.getCategoryId())
@@ -226,7 +226,7 @@ public class FinancialTransactionPersistenceAdapter
     public List<FinancialTransaction> findAll() {
 
         return jpaRepository
-            .findAll()
+            .findAllByActiveTrue()
             .stream()
             .map(entity -> {
 

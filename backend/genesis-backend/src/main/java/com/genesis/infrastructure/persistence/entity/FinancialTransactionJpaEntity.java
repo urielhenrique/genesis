@@ -142,6 +142,15 @@ public class FinancialTransactionJpaEntity {
     private LocalDateTime updatedAt;
 
     /*
+     * Indica se a movimentação está ativa.
+     *
+     * TRUE  = registro ativo
+     * FALSE = excluído logicamente
+     */
+    @Column(nullable = false)
+    private boolean active;
+
+    /*
      * ============================================================================
      * CONSTRUTOR JPA
      * ============================================================================
@@ -170,7 +179,8 @@ public class FinancialTransactionJpaEntity {
         LocalDateTime transactionDate,
         String notes,
         LocalDateTime createdAt,
-        LocalDateTime updatedAt) {
+        LocalDateTime updatedAt,
+        boolean active) {
 
         this.id = id;
         this.description = description;
@@ -182,6 +192,7 @@ public class FinancialTransactionJpaEntity {
         this.notes = notes;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+        this.active = active;
     }
 
     /*
@@ -228,6 +239,10 @@ public class FinancialTransactionJpaEntity {
 
     public LocalDateTime getUpdatedAt() {
         return updatedAt;
+    }
+
+    public boolean isActive() {
+        return active;
     }
 
     /*

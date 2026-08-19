@@ -107,7 +107,17 @@ public class DeleteFinancialTransactionUseCase {
             throw new FinancialTransactionHasReceiptsException();
         }
 
-        transactionRepository.delete(transaction);
+        /*
+         * Exclusão lógica.
+         *
+         * O registro continua no banco, mas fica inativo.
+         */
+        transaction.deactivate();
+
+        /*
+         * Persiste active = false.
+         */
+        transactionRepository.save(transaction);
     }
 
     /*
