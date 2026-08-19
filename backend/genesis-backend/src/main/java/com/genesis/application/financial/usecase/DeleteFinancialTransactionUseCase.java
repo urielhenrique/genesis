@@ -29,12 +29,16 @@ import com.genesis.domain.financial.FinancialTransaction;
  * Exceção lançada quando a movimentação não existe.
  */
 import com.genesis.domain.exception.FinancialTransactionNotFoundException;
+import com.genesis.domain.exception.FinancialTransactionHasReceiptsException;
 
 /*
  * Contrato de persistência das movimentações.
  */
 import com.genesis.domain.repository.FinancialTransactionRepository;
+import com.genesis.domain.repository.ReceiptRepository;
+import com.genesis.domain.receipt.Receipt;
 
+import java.util.List;
 /*
  * Permite que o Spring gerencie este Use Case.
  */
@@ -63,15 +67,19 @@ public class DeleteFinancialTransactionUseCase {
      */
     private final FinancialTransactionRepository transactionRepository;
 
+    private final ReceiptRepository receiptRepository;
+
     /*
      * ============================================================================
      * CONSTRUTOR
      * ============================================================================
      */
     public DeleteFinancialTransactionUseCase(
-        FinancialTransactionRepository transactionRepository) {
+        FinancialTransactionRepository transactionRepository,
+        ReceiptRepository receiptRepository) {
 
         this.transactionRepository = transactionRepository;
+        this.receiptRepository = receiptRepository;
     }
 
     /*
@@ -85,11 +93,6 @@ public class DeleteFinancialTransactionUseCase {
      */
     public void execute(UUID id) {
 
-        /*
-         * Procura a movimentação pelo ID.
-         *
-         * Se não existir, lança a exceção.
-         */
         FinancialTransaction transaction =
             transactionRepository
                 .findById(id)
@@ -97,9 +100,13 @@ public class DeleteFinancialTransactionUseCase {
                     new FinancialTransactionNotFoundException(id)
                 );
 
-        /*
-         * Remove a movimentação através do Repository.
-         */
+        List<Receipt> receipts =
+            receiptRepository.findByFinancialTransactionId(id);
+
+        if (!receipts.isEmpty()) {
+            throw new FinancialTransactionHasReceiptsException();
+        }
+
         transactionRepository.delete(transaction);
     }
 

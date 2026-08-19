@@ -40,6 +40,7 @@ import com.genesis.domain.exception.FinancialTransactionNotFoundException;
 
 import com.genesis.domain.exception.EventNotFoundException;
 import com.genesis.domain.exception.ReceiptFileNotFoundException;
+import com.genesis.domain.exception.FinancialTransactionHasReceiptsException;
 
 /*
  * Status HTTP.
@@ -235,6 +236,15 @@ public class GlobalExceptionHandler {
 
         return ResponseEntity
             .status(HttpStatus.NOT_FOUND)
+            .body(exception.getMessage());
+    }
+
+    @ExceptionHandler(FinancialTransactionHasReceiptsException.class)
+    public ResponseEntity<String> handleFinancialTransactionHasReceipts(
+        FinancialTransactionHasReceiptsException exception) {
+
+        return ResponseEntity
+            .status(HttpStatus.CONFLICT)
             .body(exception.getMessage());
     }
 
