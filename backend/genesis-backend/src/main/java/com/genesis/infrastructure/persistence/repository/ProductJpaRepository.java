@@ -69,6 +69,8 @@ import java.util.Optional;
  * Identificador único da entidade.
  */
 import java.util.UUID;
+import java.util.List;
+import java.util.Optional;
 
 /**
  * Repositório JPA da entidade ProductJpaEntity.
@@ -76,22 +78,23 @@ import java.util.UUID;
 public interface ProductJpaRepository
     extends JpaRepository<ProductJpaEntity, UUID> {
 
-    /**
-     * Procura um produto pelo nome.
-     *
-     * O Spring Data JPA cria automaticamente
-     * a implementação deste método a partir
-     * do seu nome (Query Method).
-     *
-     * Equivalente a:
-     *
-     * SELECT *
-     * FROM product
-     * WHERE name = ?
-     *
-     * @param name Nome do produto.
-     * @return Produto encontrado, caso exista.
+    /*
+     * Busca somente produtos ativos pelo ID.
      */
-    Optional<ProductJpaEntity> findByName(String name);
+    Optional<ProductJpaEntity> findByIdAndActiveTrue(
+        UUID id
+    );
+
+    /*
+     * Lista somente produtos ativos.
+     */
+    List<ProductJpaEntity> findAllByActiveTrue();
+
+    /*
+     * Busca um produto ativo pelo nome.
+     */
+    Optional<ProductJpaEntity> findByNameAndActiveTrue(
+        String name
+    );
 
 }

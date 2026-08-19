@@ -19,7 +19,7 @@ public class ActivateProductUseCase {
     public Product execute(UUID id) {
 
         Product product = repository
-            .findById(id)
+            .findByIdIncludingInactive(id)
             .orElseThrow(() -> new ProductNotFoundException(id));
 
         product.activate();

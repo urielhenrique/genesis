@@ -170,7 +170,7 @@ public class ProductPersistenceAdapter implements ProductRepository {
     public Optional<Product> findById(UUID id) {
 
         return jpaRepository
-            .findById(id)
+            .findByIdAndActiveTrue(id)
             .map(mapper::toDomain);
     }
 
@@ -185,7 +185,7 @@ public class ProductPersistenceAdapter implements ProductRepository {
     public Optional<Product> findByName(String name) {
 
         return jpaRepository
-            .findByName(name)
+            .findByNameAndActiveTrue(name)
             .map(mapper::toDomain);
     }
 
@@ -203,29 +203,20 @@ public class ProductPersistenceAdapter implements ProductRepository {
     public List<Product> findAll() {
 
         return jpaRepository
-            .findAll()
+            .findAllByActiveTrue()
             .stream()
             .map(mapper::toDomain)
             .toList();
     }
 
-    /*
-     * ============================================================================
-     * MÉTODO: delete()
-     * ============================================================================
-     *
-     * Remove um produto do banco de dados.
-     *
-     * Antes da exclusão o objeto do Domínio
-     * é convertido para uma entidade JPA.
-     */
     @Override
-    public void delete(Product product) {
+    public Optional<Product> findByIdIncludingInactive(UUID id) {
 
-        jpaRepository.delete(
-            mapper.toJpaEntity(product)
-        );
+        return jpaRepository
+            .findById(id)
+            .map(mapper::toDomain);
     }
+
 
     /*
      * ============================================================================

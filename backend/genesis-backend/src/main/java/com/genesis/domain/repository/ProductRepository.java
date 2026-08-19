@@ -95,6 +95,8 @@ public interface ProductRepository {
      */
     Optional<Product> findById(UUID id);
 
+    Optional<Product> findByIdIncludingInactive(UUID id);
+
     /**
      * Procura um produto pelo nome.
      *
@@ -109,16 +111,5 @@ public interface ProductRepository {
      * @return Lista de produtos.
      */
     List<Product> findAll();
-
-    /**
-     * Remove um produto.
-     *
-     * No futuro esta implementação poderá realizar
-     * uma exclusão lógica (Soft Delete) caso seja
-     * necessário para o negócio.
-     *
-     * @param product Produto que será removido.
-     */
-    void delete(Product product);
 
 }
