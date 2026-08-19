@@ -41,6 +41,7 @@ import com.genesis.domain.exception.FinancialTransactionNotFoundException;
 import com.genesis.domain.exception.EventNotFoundException;
 import com.genesis.domain.exception.ReceiptFileNotFoundException;
 import com.genesis.domain.exception.FinancialTransactionHasReceiptsException;
+import com.genesis.domain.exception.InsufficientInventoryException;
 
 /*
  * Status HTTP.
@@ -242,6 +243,28 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(FinancialTransactionHasReceiptsException.class)
     public ResponseEntity<String> handleFinancialTransactionHasReceipts(
         FinancialTransactionHasReceiptsException exception) {
+
+        return ResponseEntity
+            .status(HttpStatus.CONFLICT)
+            .body(exception.getMessage());
+    }
+
+    /*
+     * ============================================================================
+     * MÉTODO: handleInsufficientInventory()
+     * ============================================================================
+     *
+     * Responsabilidade:
+     *
+     * Converter InsufficientInventoryException
+     * para HTTP 409 Conflict.
+     *
+     * Ocorre quando uma saída de estoque
+     * ultrapassa a quantidade disponível.
+     */
+    @ExceptionHandler(InsufficientInventoryException.class)
+    public ResponseEntity<String> handleInsufficientInventory(
+        InsufficientInventoryException exception) {
 
         return ResponseEntity
             .status(HttpStatus.CONFLICT)

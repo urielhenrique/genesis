@@ -157,9 +157,13 @@ public class RegisterInventoryMovementUseCase {
      */
     public Inventory execute(RegisterInventoryMovementRequest request) {
 
-        /*
-         * Procura o produto informado.
-         */
+        if (request.getMovementType() == InventoryMovementType.ADJUSTMENT) {
+
+            throw new IllegalArgumentException(
+                "ADJUSTMENT movements are not supported yet."
+            );
+        }
+
         Product product = productRepository
             .findById(request.getProductId())
             .orElseThrow(() ->
