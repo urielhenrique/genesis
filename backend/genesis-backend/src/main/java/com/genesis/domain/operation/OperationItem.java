@@ -5,6 +5,9 @@ import com.genesis.domain.shared.entity.BaseEntity;
 import com.genesis.domain.shared.valueobject.Money;
 import com.genesis.domain.shared.valueobject.Quantity;
 
+import java.time.LocalDateTime;
+import java.util.UUID;
+
 
 public class OperationItem extends BaseEntity {
 
@@ -34,15 +37,49 @@ public class OperationItem extends BaseEntity {
         this.unitPrice = unitPrice;
     }
 
+    public OperationItem(
+        UUID id,
+        LocalDateTime createdAt,
+        LocalDateTime updatedAt,
+        Product product,
+        Quantity quantity,
+        Money unitPrice) {
+
+        super(id, createdAt, updatedAt);
+
+        if (product == null) {
+            throw new IllegalArgumentException("Product is required.");
+        }
+
+        if (quantity == null) {
+            throw new IllegalArgumentException("Quantity is required.");
+        }
+
+        if (unitPrice == null) {
+            throw new IllegalArgumentException("Unit price is required.");
+        }
+
+        this.product = product;
+        this.quantity = quantity;
+        this.unitPrice = unitPrice;
+    }
+
     public Product getProduct() {
+
         return product;
     }
 
     public Quantity getQuantity() {
+
         return quantity;
     }
 
+    public Money getUnitPrice() {
+        return unitPrice;
+    }
+
     public Money getTotalPrice() {
+
         return unitPrice.multiply(quantity.getValue());
     }
 

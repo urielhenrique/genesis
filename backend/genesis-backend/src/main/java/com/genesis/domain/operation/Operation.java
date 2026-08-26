@@ -106,6 +106,17 @@ public class Operation extends BaseEntity {
         touch();
     }
 
+    public void restoreItem(OperationItem item) {
+
+        if (item == null) {
+            throw new IllegalArgumentException(
+                "Operation item is required."
+            );
+        }
+
+        this.items.add(item);
+    }
+
     public void removeItem(OperationItem item) {
 
         validateDraft();
@@ -141,6 +152,36 @@ public class Operation extends BaseEntity {
                 "Only operations in DRAFT status can be changed."
             );
         }
+    }
+
+    public Operation(
+        java.util.UUID id,
+        LocalDateTime createdAt,
+        LocalDateTime updatedAt,
+        OperationType type,
+        OperationStatus status,
+        LocalDateTime operationDate,
+        String description) {
+
+        super(id, createdAt, updatedAt);
+
+        if (type == null) {
+            throw new IllegalArgumentException("Operation type is required.");
+        }
+
+        if (status == null) {
+            throw new IllegalArgumentException("Operation status is required.");
+        }
+
+        if (operationDate == null) {
+            throw new IllegalArgumentException("Operation date is required.");
+        }
+
+        this.type = type;
+        this.status = status;
+        this.operationDate = operationDate;
+        this.description = description;
+        this.items = new ArrayList<>();
     }
 
 }
